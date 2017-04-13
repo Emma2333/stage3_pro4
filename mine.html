@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css" >
+        #container{
+            position: relative;
+        }
+        #main{
+            position: absolute;
+            top:40px;
+            left: 40px;
+            border-bottom:1px solid #999999;
+           border-right: 1px solid #999999;
+            width: 500px;
+            height: 500px;
+
+        }
+        #main tr td{
+            width: 50px;
+            height: 50px;
+            border-left:1px solid #999999;
+            border-top:1px solid #999999;
+        }
+        #x{
+            position: absolute;
+            top:0;
+            left: 40px;
+            width: 500px;
+            height: 40px;
+        }
+        #x tr td{
+            width: 45px;
+            height: 45px;
+            text-align: center;
+        }
+
+        #y{
+            position: absolute;
+            top:40px;
+            left: 0px;
+            width: 40px;
+            height: 50px;
+        }
+        #y tr td{
+            width: 50px;
+            height: 50px;
+            text-align: center;
+        }
+        #control{
+            position: absolute;
+            top: 610px;
+            left:50px;
+        }
+
+        .chosen{
+            background: red;
+        }
+    </style>
+    <title>小滑块</title>
+</head>
+<body>
+    <div id="container">
+        <div id="x">
+            <table>
+                <tr>
+                    <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>
+                    <td>6</td><td>7</td><td>8</td><td>9</td><td>10</td>
+                </tr>
+            </table>
+        </div>
+        <div id="y">
+            <table>
+                <tr><td>1</td></tr>
+                <tr><td>2</td></tr>
+                <tr><td>3</td></tr>
+                <tr><td>4</td></tr>
+                <tr><td>5</td></tr>
+                <tr><td>6</td></tr>
+                <tr><td>7</td></tr>
+                <tr><td>8</td></tr>
+                <tr><td>9</td></tr>
+                <tr><td>10</td></tr>
+            </table>
+        </div>
+        <table id="main">
+            <tr>
+                <td class="chosen"></td>   <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td></td>   <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td></td>   <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td></td>   <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td></td>   <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td></td>   <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td></td>   <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td></td>   <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td></td>   <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td></td>   <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="control">
+        <form>
+            <input type="text" name="ctrl" id="ctrl">
+            <button type="button"  id="btn">执行</button>
+        </form>
+
+    </div>
+
+<script>
+    var btn=document.getElementById('btn');
+    var table=document.getElementById('main');
+    btn.onclick=function () {
+        var chosen=document.getElementsByClassName('chosen');
+        /*var parent=chosen.parentNode*/
+        alert(chosen.innerText);
+        var order=document.getElementById('ctrl').value;
+        for(var i=0;i<10;i++){
+            for(var j=0;j<10;i++){
+            }
+            return false
+        }
+
+        switch (order){
+            case GO:
+                break;
+        }
+    }
+
+    function go() {
+
+    }
+
+
+</script>
+</body>
+</html>
