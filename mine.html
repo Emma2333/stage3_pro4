@@ -3,89 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <style type="text/css" >
+        body{
+            margin: 0;
+            padding: 0;
+        }
         #container{
             position: relative;
         }
         #main{
+            border: 2px solid rgb(185,197,213);
             position: absolute;
-            top:40px;
-            left: 40px;
-            border-bottom:1px solid #999999;
-           border-right: 1px solid #999999;
-            width: 500px;
-            height: 500px;
-
+            top: 0px;
+            left:0px
         }
         #main tr td{
             width: 50px;
             height: 50px;
-            border-left:1px solid #999999;
-            border-top:1px solid #999999;
-        }
-        #x{
-            position: absolute;
-            top:0;
-            left: 40px;
-            width: 500px;
-            height: 40px;
-        }
-        #x tr td{
-            width: 45px;
-            height: 45px;
-            text-align: center;
+            border:1px solid rgb(185,197,213);
         }
 
-        #y{
-            position: absolute;
-            top:40px;
-            left: 0px;
-            width: 40px;
-            height: 50px;
-        }
-        #y tr td{
-            width: 50px;
-            height: 50px;
-            text-align: center;
-        }
         #control{
             position: absolute;
-            top: 610px;
+            top: 580px;
             left:50px;
         }
-
-        .chosen{
-            background: red;
+        #qizi{
+            width: 50px;
+            height: 50px;
+            background: rgb(227,229,237);
+            position: absolute;
+            top: 471px;
+            left: 471px;
         }
+        #direction{
+            width: 15px;
+            height: 50px;
+            background: rgb(185,197,213);
+            position: absolute;
+        }
+
     </style>
     <title>小滑块</title>
 </head>
 <body>
     <div id="container">
-        <div id="x">
-            <table>
-                <tr>
-                    <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>
-                    <td>6</td><td>7</td><td>8</td><td>9</td><td>10</td>
-                </tr>
-            </table>
-        </div>
-        <div id="y">
-            <table>
-                <tr><td>1</td></tr>
-                <tr><td>2</td></tr>
-                <tr><td>3</td></tr>
-                <tr><td>4</td></tr>
-                <tr><td>5</td></tr>
-                <tr><td>6</td></tr>
-                <tr><td>7</td></tr>
-                <tr><td>8</td></tr>
-                <tr><td>9</td></tr>
-                <tr><td>10</td></tr>
-            </table>
-        </div>
-        <table id="main">
+        <table id="main"cellpadding="0" cellspacing="0">
             <tr>
-                <td class="chosen"></td>   <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+                <td ></td>   <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
             </tr>
             <tr>
                 <td></td>   <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
@@ -117,6 +81,10 @@
         </table>
     </div>
 
+    <div id="qizi">
+        <div id="direction"></div>
+    </div>
+
     <div id="control">
         <form>
             <input type="text" name="ctrl" id="ctrl">
@@ -127,28 +95,99 @@
 
 <script>
     var btn=document.getElementById('btn');
-    var table=document.getElementById('main');
-    btn.onclick=function () {
-        var chosen=document.getElementsByClassName('chosen');
-        /*var parent=chosen.parentNode*/
-        alert(chosen.innerText);
+    btn.onclick=function(){
         var order=document.getElementById('ctrl').value;
-        for(var i=0;i<10;i++){
-            for(var j=0;j<10;i++){
-            }
-            return false
-        }
-
+        var qizi=document.getElementById('qizi');
+        var dirbox=document.getElementById('direction'),
+                T=qizi.offsetTop,
+                L=qizi.offsetLeft,
+                h=dirbox.offsetHeight,              /*offset的属性都是只读的！！！！*/
+                w=dirbox.offsetWidth,
+                t=dirbox.offsetTop,
+                l=dirbox.offsetLeft;
+        var x=Math.abs(h-w);
+        var odir=dir(h,w,t,l);
         switch (order){
-            case GO:
+            case "GO":{     /*GO是对棋子的加减   turn是对于方向小方块的改变*/
+                switch (odir){
+                    case "top":qizi.style.top=T-52+"px";break;
+                    case "lef":qizi.style.left=L-52+"px";break;
+                    case "bot":qizi.style.top=T+52+"px";break;
+                    case "rig":qizi.style.left=L+52+"px";break;
+                }
                 break;
+            }
+            case "TUN LEF":{
+                changeDir(dirbox,h,w);    /*只要是90度转弯的，一定是进行宽高互换*/
+                switch (odir){
+                    case "top":break;
+                    case "lef":{
+                        dirbox.style.left=0+"px";
+                        dirbox.style.top=x+"px";
+                        break;
+                    }
+                    case "bot":{
+                        dirbox.style.left=x+"px";
+                        dirbox.style.top=0+"px";
+                        break;
+                    }
+                    case "rig":{
+                        dirbox.style.left=0+"px";
+                        dirbox.style.top=0+"px";
+                        break;
+                    }
+
+                }
+                break;
+            }
+            case "TUN RIG":{
+                changeDir(dirbox,h,w);
+                switch (odir){
+                    case "top":dirbox.style.left=x+'px';break;
+                    case "bot":dirbox.style.top=0+'px';break;
+                    case "lef":break;
+                    case "rig":dirbox.style.top=x+'px';
+                        dirbox.style.left=0+'px';break;
+                };break;
+            }
+            case "TUN BAC":{
+                switch (odir){
+                    case "top":dirbox.style.top=x+'px';break;
+                    case "bot":dirbox.style.top=0+'px';break;
+                    case "lef":dirbox.style.left=x+'px';break;
+                    case "rig":dirbox.style.left=0+'px';break;
+                };break;
+            }
+        }
+        if(qizi.offsetTop<1) qizi.style.top='2px';
+        if(qizi.offsetTop>472) qizi.style.top='473px';
+        if(qizi.offsetLeft<1) qizi.style.left='2px';
+        if(qizi.offsetLeft>472) qizi.style.left='473px';
+    }
+
+
+    /*dirbox 宽高互换函数*/      /*offset的属性都是只读的！！！！*/
+    function changeDir(dirbox,h,w) {
+        dirbox.style.width=h+"px";
+        dirbox.style.height=w+"px";
+    }
+
+    /*检测方向函数*/
+    function dir(h,w,t,l) {
+        if(h<w){
+            if(t==0){
+                return "top";
+            }else{
+                return "bot"
+            }
+        }else{
+            if(l==0){
+                return "lef";
+            }else{
+                return "rig";
+            }
         }
     }
-
-    function go() {
-
-    }
-
 
 </script>
 </body>

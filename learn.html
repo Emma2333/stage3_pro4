@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>棋盘格子</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+        #qipan{
+            border: 2px solid rgb(185,197,213);
+            position: absolute;
+        }
+        #qipan tr,td{
+            width: 50px;
+            height: 50px;
+            border:1px solid rgb(185,197,213);
+        }
+        #qizi{
+            width: 50px;
+            height: 50px;
+            background: rgb(227,229,237);
+            position: absolute;
+            top: 271px;
+            left: 271px;
+        }
+        #direction{
+            width: 15px;
+            height: 50px;
+            background: rgb(185,197,213);
+            position: absolute;
+        }
+        #input{
+            width: 150px;
+            height: 20px;
+            border:2px solid rgb(185,197,213);
+            margin-top: 530px;
+        }
+        #btn{
+            height: 24px;
+            padding:0 10px;
+            margin-top: 530px;
+            background: rgb(185,197,213);
+            border: none;
+            box-shadow: 0 0 2px rgb(185,197,213);
+            font-family: '微软雅黑';
+            color: #FFF;
+        }
+    </style>
+
+</head>
+<body>
+<div>
+    <table id="qipan" cellpadding="0" cellspacing="0" ></table>
+</div>
+<div id="qizi">
+    <div id="direction"></div>
+</div>
+<div>
+    <input type="text" id="input">
+    <button id="btn">执行</button>
+</div>
+
+
+<script type="text/javascript">
+    //创建棋盘
+    function table(){
+        var qipan=document.getElementById('qipan');
+        for (var i = 0; i <10; i++) {
+            var tr=document.createElement('tr');
+            qipan.appendChild(tr);
+            for (var j = 0; j < 10; j++) {
+                var td=document.createElement('td');
+                tr.appendChild(td);
+            }
+        }
+    }
+
+    //检测方向
+    function dir(h,w,t,l){
+        if(h<w){
+            if(t==0) {return "top"}
+            else{return "bot"}
+        }else{
+            if(l==0){return "lef"}
+            else{return "rig"}
+        }
+    }
+
+    //宽高互换
+    function dirD(dirbox,h,w){
+        dirbox.style.height=w+'px';
+        dirbox.style.width=h+'px';
+    }
+
+    //旗子定位
+    function gps(){
+        var input=document.getElementById('input').value;
+        var dirbox=document.getElementById('direction');
+        var	qizi=document.getElementById('qizi'),
+                T=qizi.offsetTop,
+                L=qizi.offsetLeft,
+                h=dirbox.offsetHeight,
+                w=dirbox.offsetWidth,
+                t=dirbox.offsetTop,
+                l=dirbox.offsetLeft;
+        x=Math.abs(h-w);
+        odir=dir(h,w,t,l);
+        switch (input){
+            case 'GO':          /*GO是对棋子的加减   turn是对于方向小方块的改变*/
+                switch (odir){
+                    case "top":qizi.style.top=T-52+'px';break;
+                    case "bot":qizi.style.top=T+52+'px';break;
+                    case "lef":qizi.style.left=L-52+'px';break;
+                    case "rig":qizi.style.left=L+52+'px';break;
+                };break;
+            case 'TUN LEF':
+                dirD(dirbox,h,w);  /*只要是90度转弯的，一定是进行宽高互换*/
+                switch (odir){
+                    case "top":break;
+                    case "bot":dirbox.style.top=0+'px';
+                        dirbox.style.left=x+'px';break;
+                    case "lef":dirbox.style.top=x+'px';break;
+                    case "rig":dirbox.style.left=0+'px';break;
+                };break;
+            case 'TUN RIG':
+                dirD(dirbox,h,w);
+                switch (odir){
+                    case "top":dirbox.style.left=x+'px';break;
+                    case "bot":dirbox.style.top=0+'px';break;
+                    case "lef":break;
+                    case "rig":dirbox.style.top=x+'px';
+                        dirbox.style.left=0+'px';break;
+                };break;
+            case 'TUN BAC':
+                switch (odir){
+                    case "top":dirbox.style.top=x+'px';break;
+                    case "bot":dirbox.style.top=0+'px';break;
+                    case "lef":dirbox.style.left=x+'px';break;
+                    case "rig":dirbox.style.left=0+'px';break;
+                };break;
+
+        };
+        if(qizi.offsetTop<11) qizi.style.top='11px';
+        if(qizi.offsetTop>479) qizi.style.top='479px';
+        if(qizi.offsetLeft<11) qizi.style.left='11px';
+        if(qizi.offsetLeft>479) qizi.style.left='479px';
+        console.log(qizi.offsetTop,qizi.offsetLeft)
+    }
+
+    window.onload=function(){
+        table();
+        document.getElementById('btn').addEventListener('click',gps);
+    }
+</script>
+</body>
+</html>
